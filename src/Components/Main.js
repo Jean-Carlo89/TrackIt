@@ -16,7 +16,7 @@ export default function Main(){
            
            <Link to ='/cadastro'>
                 <p>Não tem uma conta? Cadastre-se!</p>
-           </Link>
+            </Link>
            
         </Container>
         
