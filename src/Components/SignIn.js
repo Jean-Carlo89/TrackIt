@@ -3,6 +3,7 @@ import Button from '../ButtonComponent'
 import {Link} from 'react-router-dom'
 import trackit from '../images/trackit.svg'
 import {useState} from 'react'
+import axios from 'axios'
 
 export default function SignIn(){
     const  [inputData,setInputData] = useState({})
@@ -11,8 +12,29 @@ export default function SignIn(){
     
     inputData[key]=e.target.value
     setInputData({...inputData})
-    console.log(inputData)
+    //console.log(inputData)
    
+}
+
+function send(){
+    
+    //console.log(inputData)
+    const data={...inputData}
+    //console.log(data)
+    
+    const promisse = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up',data)
+
+    promisse.then((response)=>{
+        console.log('deu bom')
+        console.log(response)
+
+    })
+
+    promisse.catch((responseError)=>{
+        console.log('deu ruim')
+        console.log(responseError)
+        
+    })
 }
    
     return (
@@ -20,28 +42,29 @@ export default function SignIn(){
         <Container>
     
             <img src={trackit} alt='logo'/>
-            <button onClick={Test}>testar objeto</button>
+            
           
            <input className='first' type='text' value={inputData.email || ''} 
            placeholder='email' 
            onChange={(e)=>Test(e,'email')}/> 
           
-          
+         
            
-          <input className='first' type='password' value={inputData.password || ''} 
+          <input type='password' value={inputData.password || ''} 
            placeholder='password' 
            onChange={(e)=>Test(e,'password')}/>
 
             
-        <input className='first' type='text' value={inputData.name || ''} 
+        <input  type='text' value={inputData.name || ''} 
            placeholder='name' 
            onChange={(e)=>Test(e,'name')}/>
 
             
-        <input className='first' type='text' value={inputData.image || ''} 
+        <input  type='text' value={inputData.image || ''} 
            placeholder='image' 
            onChange={(e)=>Test(e,'image')}/>
-           <Button onClick={()=>Test()}>Entrar</Button>
+           
+           <Button onClick={send}>Entrar</Button>
            
            <Link to='/'>
             <p>Já tem uma conta? Faça login!</p>
