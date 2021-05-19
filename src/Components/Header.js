@@ -20,7 +20,7 @@ const HeaderContainer = styled.header`
     min-width:375px;
     width:100%;
     height:70px;
-    background-color:blue;
+    background-color:#126BA5;
     display:flex;
     justify-content:center;
     position:fixed;

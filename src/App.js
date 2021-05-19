@@ -1,7 +1,7 @@
 import Login from './Components/Login'
 import {BrowserRouter,Switch,Route} from 'react-router-dom'
 import SignIn from './Components/SignIn'
-import Habits from './Components/Habits'
+import Habits from './Components/Habits/Habits'
 import {useState} from 'react'
 
 export default function App(){
