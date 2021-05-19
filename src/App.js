@@ -1,7 +1,9 @@
-import Main from './Components/Main'
+import Login from './Components/Login'
 import {BrowserRouter,Switch,Route} from 'react-router-dom'
 import SignIn from './Components/SignIn'
+import Habits from './Components/Habits'
 import {useState} from 'react'
+
 export default function App(){
 
     const [token,setToken] = useState(null)
@@ -11,11 +13,15 @@ export default function App(){
             <Switch>
                 
                 <Route path='/' exact>
-                    <Main token={token} setToken={setToken}/>
+                    <Login token={token} setToken={setToken}/>
                 </Route>
 
                 <Route path='/cadastro' exact>
                     <SignIn />
+                </Route>
+
+                <Route path='/habitos' exact>
+                    <Habits />
                 </Route>
             
             </Switch>

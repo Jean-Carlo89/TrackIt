@@ -28,6 +28,7 @@ export default function Main({token,setToken}){
             const empty={}
             setLoginData(empty)
             setLoading(false)
+            history.push('/habitos')
 
         }) 
 
