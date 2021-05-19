@@ -4,32 +4,42 @@ import {Link,useHistory} from 'react-router-dom'
 import trackit from '../images/trackit.svg'
 import {useState} from 'react'
 import axios from 'axios'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
 
-
-export default function Main(){
+export default function Main({token,setToken}){
     const  [loginData,setLoginData] = useState({})
-    const [token,setToken] = useState('')
+    const [loading,setLoading] = useState(false)
+    
    const history = useHistory()
-    function login(){
+    
+   function login(){
         //console.log(loginData)
         const body = {...loginData}
         //console.log(login)
+        setLoading(true)
         const promisse= axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login',body)
         
         promisse.then((response)=>{
             console.log('deu bom')
             console.log(response)
+            setToken(response.data.token)
+            
+            const empty={}
+            setLoginData(empty)
+            setLoading(false)
 
         }) 
 
         promisse.catch((responseError)=>{
+            setLoading(false)
             console.log('deu ruim')
            // console.log(responseError)
-            //const empty={}
-            //setLoginData({})
+            const empty={}
+            setLoginData(empty)
             //console.log(responseError.response)
             
-           
+            
             if(responseError.response.status===401){
                 alert("Usuário e/ou senha inválidos!")
                 
@@ -38,12 +48,7 @@ export default function Main(){
             }
          
             //alert('dados incorretos')
-                
-            
-           
-
-
-        })
+            })
     }
 
     function SaveInfo(e,key){
@@ -56,6 +61,7 @@ export default function Main(){
 
     function teste(){
         console.log(loginData)
+        console.log(token)
     }
     return (
     
@@ -64,11 +70,23 @@ export default function Main(){
     
             <img src={trackit}/>
            <button onClick={teste}>sas</button>
-           <input className='first' type='text' value={loginData.email || ''}  placeholder='email' onChange={(e)=>SaveInfo(e,'email')}></input> 
+           <input className='first' 
+           type='text' 
+           value={loginData.email || ''} 
+           onKeyPress={(e)=>{if(e.code==="Enter"){login()}}} 
+           placeholder='email' onChange={(e)=>SaveInfo(e,'email')}
+           disabled={loading}    
+           />
            
-           <input type='password' value={loginData.password || ''} placeholder='senha' onChange={(e)=>SaveInfo(e,'password')}></input> 
+           <input type='password' 
+           value={loginData.password || ''} 
+           onKeyPress={(e)=>{if(e.code==="Enter"){login()}}} 
+           placeholder='senha' onChange={(e)=>SaveInfo(e,'password')}
+           disabled={loading}
+           /> 
            
-           <Button onClick={login}>Entrar</Button>
+           <Button onClick={login}>{loading ? <Loader type="ThreeDots" color="#FFFFFF" height={40} width={80} /> : 'Entrar'}</Button>
+           
            
            <Link to ='/cadastro'>
                 <p>Não tem uma conta? Cadastre-se!</p>
@@ -82,6 +100,7 @@ export default function Main(){
     
     const Container = styled.div `
         min-width:305px;
+        min-height:178px;
         height:100vh;
        // background-color:lightblue;
         display:flex;
@@ -90,9 +109,12 @@ export default function Main(){
         width:80%;
         align-items:center;
         justify-content:center;
+        min-height :500px;
+        
     
         input{
             width:303px;
+            
             height: 45px;
             border: 1px solid #D5D5D5;
             border-radius:5px;
@@ -107,7 +129,7 @@ export default function Main(){
         }
     
         p{
-            width:210px;
+            width:225px;
             height: 17px;
             font-size:13px;
             color:#52B6FF;
