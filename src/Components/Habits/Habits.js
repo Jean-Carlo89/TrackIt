@@ -28,7 +28,7 @@ export default function Habits(){
             <div>Meus hábitos <button onClick={createHabit}>+</button></div>
            
                 <div className='createHabit' >
-                <form>
+                
                         <input placeholder="Nome do hábito..." 
                         onChange={(e)=>(setHabit(e.target.value))} 
                         value={habit}
@@ -46,7 +46,7 @@ export default function Habits(){
 
                             <p>Cancelar</p>  <button>Salvar</button>
                         </div>
-                    </form>
+                    
                     
                 </div>
             
