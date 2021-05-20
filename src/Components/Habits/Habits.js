@@ -54,8 +54,15 @@ export default function Habits(){
             console.log(responseError.response)
         })
 
-       // checkHabitsList()
-        habitsList.length===0 ? setShowHabit(true) : setShowHabit(false)
+      if(habitsList.length===0 ){
+        
+        setShowHabit(true)
+        console.log('passow por showhabit true')
+      }else{
+        setShowHabit(false)
+        console.log('passow por showhabit false')
+      }
+       // habitsList.length===0 ? setShowHabit(true) : setShowHabit(false)
     },[])
 
     function requestHabitsList(){

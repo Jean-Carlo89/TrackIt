@@ -3,7 +3,7 @@ import {BrowserRouter,Switch,Route} from 'react-router-dom'
 import SignIn from './Components/SignIn'
 import Habits from './Components/Habits/Habits'
 import {useState} from 'react'
-import Today from './Components/Today'
+import Today from './Components/Today/Today'
 
 import TokenContext from './Contexts/TokenContext'
 export default function App(){
