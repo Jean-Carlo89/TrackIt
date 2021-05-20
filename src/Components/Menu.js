@@ -1,15 +1,33 @@
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import Circle from '../images/menuCircle.svg'
+
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
 export default function Menu(){
+    const percentage = 66;
     return(
         <MenuContainer>
-            <Link>
+            <Link to='/habitos'>
                 <p>Hábitos</p>
             </Link>
             
+            <Link to='/hoje'>
             <img src={Circle}/>
-
+            </Link>
+        {/*    <CircularProgressbar
+        value={percentage}
+        text={`${percentage}%`}
+        background
+        backgroundPadding={6}
+        styles={buildStyles({
+          backgroundColor: "#3e98c7",
+          textColor: "#fff",
+          pathColor: "#fff",
+          trailColor: "transparent"
+        })}
+      />*/}
            <Link>
             <p>Histórico</p>
            </Link> 
@@ -30,6 +48,7 @@ const MenuContainer = styled.footer`
  position:fixed;
  bottom:0;
  right:0;
+ z-index:85;
 
  p{
      

@@ -1,11 +1,19 @@
 
 import {useState} from 'react'
-export default function EachDay({day,days,setDays,key,id}){
+export default function EachDay({day,days,setDays,key,id,cancel,setCancel,loading}){
     const [isSelected,setIsSelected] = useState(false)
    // console.log(id)
     
-    function selectDays(dayNumber){
-       
+   
+   
+   /*function checkCancel(){
+   if(cancel){
+       setIsSelected(false)
+   }
+}*/
+    
+   function selectDays(dayNumber){
+       setCancel(false)
         
        if(isSelected){
             const newArray = days.filter((item)=>(item!==dayNumber))
@@ -26,8 +34,8 @@ export default function EachDay({day,days,setDays,key,id}){
     }
     
     return(
-        <div className={`days ${isSelected ? 'selected' : ''}`}  onClick={()=>selectDays(id)}>
+        <button disable={loading} className={`days ${cancel ? '' : (isSelected ? 'selected' : 'white')}`}   onClick={()=>selectDays(id)}>
             {day}
-        </div>
+        </button>
     )
 }

@@ -1,8 +1,11 @@
 import styled from 'styled-components'
 import imgHeader from '../images/imgHeader.svg'
 import profile from '../images/bobesponja.jpeg'
+import {useContext} from 'react'
+import TokenContext from '../Contexts/TokenContext'
 
 export default function Header(){
+    
     return(
         <HeaderContainer>
             <div>
@@ -26,6 +29,7 @@ const HeaderContainer = styled.header`
     position:fixed;
     top:0;
     right:0;
+    z-index:85;
     
 
     div{
@@ -38,6 +42,7 @@ const HeaderContainer = styled.header`
        
     }
 
+    
     
 
     .profile{

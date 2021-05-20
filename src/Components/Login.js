@@ -7,7 +7,7 @@ import axios from 'axios'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 
-export default function Main({token,setToken}){
+export default function Main({token,setToken,image,setImage}){
     const  [loginData,setLoginData] = useState({})
     const [loading,setLoading] = useState(false)
     
@@ -24,11 +24,12 @@ export default function Main({token,setToken}){
             console.log('deu bom')
             console.log(response)
             setToken(response.data.token)
+            setImage(response.data.image)
             
             const empty={}
             setLoginData(empty)
             setLoading(false)
-            history.push('/habitos')
+            history.push('/hoje')
 
         }) 
 
