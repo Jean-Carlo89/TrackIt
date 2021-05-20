@@ -8,7 +8,10 @@ export default function Habits(){
     const [add,setAdd] = useState(false)
     const [habit,setHabit] = useState('')
     const [showHabit,setShowHabit] = useState(false)
-    const days = ['D','S','Q','Q','S','S']
+    const [chosendays,setChosenDays] = useState([])
+    
+    
+    const days = ['D','S','T','Q','Q','S','S']
     function createHabit(){
         //add ? setAdd(false) : setAdd(true)
         setShowHabit(true)
@@ -18,6 +21,10 @@ export default function Habits(){
     function check(){
 
         console.log(days)
+    }
+
+    function cancelHabit(){
+
     }
     return (
        
@@ -37,14 +44,20 @@ export default function Habits(){
                         <div className='weekdays'>
                             {days.map((day, i) => {
                                 return (
-                                    <EachDay day={day} key={i} />
+                                    <EachDay day={day} 
+                                    key={i} 
+                                    id={i+1} 
+                                    days={chosendays} 
+                                    setDays={setChosenDays} 
+                                    />
                                 )
                             })}
                         </div>
+                        <button onClick={()=>(console.log(chosendays))}></button>
 
                         <div className='cancel-submit'>
 
-                            <p>Cancelar</p>  <button>Salvar</button>
+                            <p onclick={cancelHabit}>Cancelar</p>  <button>Salvar</button>
                         </div>
                     
                     
@@ -116,6 +129,7 @@ const Container = styled.div`
                 .weekdays{
                     width:210px;
                     height:32px;
+                    margin-right: 90px;
                 }
 
                 .days{
@@ -126,6 +140,11 @@ const Container = styled.div`
                     justify-content:center;
                     align-items:center;
                     border:1px solid #CFCFCF;
+                    
+                }
+
+                .days.selected{
+                        background-color: red;
                 }
 
                 .cancel-submit{
@@ -209,3 +228,5 @@ const Container = styled.div`
 `
 
 */
+{/*isSelected={isSelected}
+                                setIsSelected={setIsSelected}*/}
