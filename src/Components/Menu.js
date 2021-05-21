@@ -10,7 +10,7 @@ import PercentageContext from '../Contexts/PercentageContext';
 export default function Menu(){
 
     const {habitsList,completedHabits} = useContext(PercentageContext)
-    const percentage = ((completedHabits.length/habitsList.length)*100);
+    const percentage = habitsList.length<1 ? 0 : ((completedHabits.length/habitsList.length)*100);
     function test(){
 
         console.log(habitsList)
@@ -33,7 +33,7 @@ export default function Menu(){
         <div className='progressbar'>
             {    <CircularProgressbar
         value={percentage}
-        text={`${percentage}%`}
+        text={`Hoje`}
         background
         backgroundPadding={6}
         styles={buildStyles({

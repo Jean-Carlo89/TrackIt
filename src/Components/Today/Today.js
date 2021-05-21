@@ -94,7 +94,7 @@ export default function Today({habitsList,setHabitsList,completedHabits,setCompl
                 const newCompletedHabits2 = [...completedHabits,id]
                 setCompletedHabits(newCompletedHabits2)
 
-                const config = {
+               /* const config = {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
@@ -110,7 +110,7 @@ export default function Today({habitsList,setHabitsList,completedHabits,setCompl
                 promisse.catch((responseError)=>{
                     console.log('Erro na marcao do habito pelo servidor')
                     console.log(responseError)
-                })
+                })*/
             }
             console.log(completedHabits)
 
