@@ -68,7 +68,7 @@ export default function Today({habitsList,setHabitsList,completedHabits,setCompl
                 <HabitInfo>
                     <div>
                     <h1>{`${dayjs().format('dddd')},${dayjs().format('D/MM')}`}</h1>
-                    <h2 className={completedHabits.length<1 ? '' : 'selected'}>{completedHabits.length<1 ? 'Nenhum hábito concluído ainda' : `${((completedHabits.length/habitsList.length)*100).toFixed(2)}% dos hábitos concluídos`}</h2>
+                    <h2 className={completedHabits.length<1 ? '' : 'selected'}>{completedHabits.length<1 ? 'Nenhum hábito concluído ainda' : `${((completedHabits.length/habitsList.length)*100).toFixed(0)}% dos hábitos concluídos`}</h2>
                     </div>
                 </HabitInfo>
 

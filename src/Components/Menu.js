@@ -13,8 +13,7 @@ export default function Menu(){
     const percentage = habitsList.length<1 ? 0 : ((completedHabits.length/habitsList.length)*100);
     function test(){
 
-        console.log(habitsList)
-        console.log(completedHabits)
+        
 
     }
     return(

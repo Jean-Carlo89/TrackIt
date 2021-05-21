@@ -32,7 +32,7 @@ export default function Habits(){
 
     const history = useHistory()
 
-    const[firstLoad,setFirstLoad] = useState(false)
+    
     
     
     const days = ['D','S','T','Q','Q','S','S']
@@ -50,6 +50,7 @@ export default function Habits(){
         requisition.then((response)=>{
           
             setHabitsList(response.data)
+           
            
             
         })
@@ -98,11 +99,9 @@ export default function Habits(){
      }
 
    
-     if(firstLoad){
-         return(
-           <div> <Loader type="ThreeDots" color="#FFFFFF" height={1000} width={1000} /></div>
-         )
-     }else{
+     
+    
+     
     
     return (
        
@@ -174,7 +173,7 @@ export default function Habits(){
         
         </Background>
      
-        )}
+        )
 
 
         function createHabit(){
