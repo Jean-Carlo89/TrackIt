@@ -23,6 +23,8 @@ export default function Habits(){
     const [loading,setLoading] = useState(false)
     
     const value= useContext(TokenContext)
+
+    const [isSelected,setIsSelected] = useState(false)
     
     const [habitsList,setHabitsList] = useState([])
 
@@ -54,7 +56,7 @@ export default function Habits(){
             console.log(responseError.response)
         })
 
-      if(habitsList.length===0 ){
+     /* if(habitsList.length===0 ){
         
         setShowHabit(true)
         console.log('passow por showhabit true')
@@ -62,7 +64,7 @@ export default function Habits(){
         setShowHabit(false)
         console.log('passow por showhabit false')
       }
-       // habitsList.length===0 ? setShowHabit(true) : setShowHabit(false)
+       // habitsList.length===0 ? setShowHabit(true) : setShowHabit(false)*/
     },[])
 
     function requestHabitsList(){
@@ -87,6 +89,23 @@ export default function Habits(){
         })
     }
 
+
+    
+    function selectDays(dayNumber){
+        
+         console.log(dayNumber)
+         
+       
+
+         if(chosendays.includes(dayNumber)){
+             const newChosenDays = chosendays.filter((d)=>(d!==dayNumber))
+             setChosenDays([...newChosenDays])
+         }else{
+             const newChosenDays2 = [...chosendays,dayNumber]
+             setChosenDays(newChosenDays2)
+         }
+     }
+
    
     
     return (
@@ -107,18 +126,10 @@ export default function Habits(){
                         
                         <div className='weekdays'>
                             {days.map((day, i) => {
-                                return (
-                                    <EachDay day={day} 
-                                    key={i} 
-                                    id={i} 
-                                    days={chosendays} 
-                                    cancel={cancel}
-                                    setCancel={setCancel}
-                                    setDays={setChosenDays}
-                                    loading={loading} 
-                                    />
+                                return(
+                                <DaysDiv className={chosendays.includes(i) ? 'selected' :''} onClick={()=>selectDays(i)} key={i} id={i}>{day}</DaysDiv>
                                 )
-                            })}
+                             })}
                         </div>
                         
 
@@ -155,10 +166,10 @@ export default function Habits(){
                 </ul>
                 
             
-            <p className='message'>
+            {!habitsList || habitsList.length===0 ? <p className='message'>
                 Você não tem nenhum hábito cadastrado ainda. 
                 Adicione um hábito para começar a trackear!
-             </p>
+             </p>: ''} 
            
 
         </Container>
@@ -173,7 +184,7 @@ export default function Habits(){
         function createHabit(){
             //add ? setAdd(false) : setAdd(true)
             setAddHabit(true)
-            setChosenDays([])
+            //setChosenDays([])
         }
         
         
@@ -182,7 +193,7 @@ export default function Habits(){
             //console.log(days)
             console.log('dias escolhidos')
             console.log(chosendays)
-            console.log('habito :' +habit)
+            /*console.log('habito :' +habit)
             console.log('valor do token :'+value)
             console.log('lista de habitos')
             console.log(habitsList)
@@ -191,7 +202,7 @@ export default function Habits(){
             console.log('estado do addHabit')
             console.log(addHabit)
             console.log('estado do loading')
-            console.log(loading)
+            console.log(loading)*/
 
         }
 
@@ -256,7 +267,7 @@ export default function Habits(){
                 console.log(response)
                 setLoading(false)
 
-                setChosenDays([])
+            setChosenDays([])
             setHabit('')
             setCancel(true)
             setAddHabit(false)
@@ -377,9 +388,9 @@ const Container = styled.div`
                     width:210px;
                     height:32px;
                     margin-right: 90px;
-                }
 
-                .days{
+
+                    .days{
                     width:30px;
                     height:30px;
                     color:#DBDBDB;
@@ -387,11 +398,15 @@ const Container = styled.div`
                     justify-content:center;
                     align-items:center;
                     border:1px solid #CFCFCF;
-                    background-color: white;
+                   // background-color: white;
+                    color: gray;
                     
                 }
+                }
 
-                .days.selected{
+                
+
+                .selected{
                         background-color: #CFCFCF;
                         color: white;
                 }
@@ -424,6 +439,8 @@ const Container = styled.div`
 
 
                     }
+
+                    
                 }
             }
         
@@ -432,7 +449,7 @@ const Container = styled.div`
             width:338px;
             height:74px;
             font-size:18px;
-            display: ${props=>props.showHabit ? 'block' : 'none'};
+            //display: ${props=>props.showHabit ? 'block' : 'none'};
             margin-top:30px;
         }
         
@@ -440,7 +457,7 @@ const Container = styled.div`
 
         width:100%;
         display:flex;
-        height: 75px;
+        //height: 75px;
         //border: 1px solid red;
         //border:1px solid yellow;
         justify-content:space-between;
@@ -518,6 +535,23 @@ const Container = styled.div`
        }
         
        
+`
+
+const DaysDiv = styled.div`
+        width:30px;
+        height:30px;
+        color:#DBDBDB;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        border:1px solid #CFCFCF;
+        background-color: white;
+        color: gray;
+
+        &.selected{
+            background-color: #CFCFCF;
+            color: white;
+        }
 `
 
 /*
