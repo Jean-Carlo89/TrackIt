@@ -77,9 +77,11 @@ export default function Today({habitsList,setHabitsList,completedHabits,setCompl
                         
                         return(
                         <li key={habit.id} id={habit.id}>
+                            
                             <h1>{habit.name}</h1>
                             <h3>Sequencia atual: <em className={ habit.done===true ? 'selected' :''}>{habit.currentSequence}</em></h3>
                             <h3>Seu recorde: {habit.highestSequence}</h3>
+                            
                             <button className={ habit.done===true ? 'selected' :''} onClick={()=>toggleCompleteHabit(habit.id,habit.done)} ><FaCheckSquare/></button>
                         </li>
                         )
@@ -223,8 +225,12 @@ const HabitInfo = styled.div`
             font-size: 18px;
             color: #BABABA;
 
-            
+           
         }
+
+        h2.selected{
+                color: #8FC549;
+            }
 
         
            
@@ -249,9 +255,14 @@ const TodayHabits = styled.ul`
         background-color: white;
         width: 340px;
         height: 94px;
+        border-radius:4px;
       
         position: relative;
+
+       
     }
+
+   
 
     h1{
         width: auto;

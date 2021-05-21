@@ -9,8 +9,8 @@ import {useContext} from 'react'
 import TokenContext from '../../Contexts/TokenContext'
 import { FaBeer } from 'react-icons/fa';
 
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 import {FaRegTrashAlt} from 'react-icons/fa'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
@@ -31,12 +31,14 @@ export default function Habits(){
     const [habitsList,setHabitsList] = useState([])
 
     const history = useHistory()
+
+    const[firstLoad,setFirstLoad] = useState(false)
     
     
     const days = ['D','S','T','Q','Q','S','S']
     
     useEffect(()=>{
-      
+        
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -48,6 +50,7 @@ export default function Habits(){
         requisition.then((response)=>{
           
             setHabitsList(response.data)
+           
             
         })
 
@@ -95,6 +98,11 @@ export default function Habits(){
      }
 
    
+     if(firstLoad){
+         return(
+           <div> <Loader type="ThreeDots" color="#FFFFFF" height={1000} width={1000} /></div>
+         )
+     }else{
     
     return (
        
@@ -166,7 +174,7 @@ export default function Habits(){
         
         </Background>
      
-        )
+        )}
 
 
         function createHabit(){

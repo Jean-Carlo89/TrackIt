@@ -19,15 +19,13 @@ export default function Menu(){
     }
     return(
         <MenuContainer>
-            <button onClick={test}>testar</button>
+            
             
             <Link to='/habitos'>
                 <p>Hábitos</p>
             </Link>
             
-            {/*<Link to='/hoje'>
-            <img src={Circle}/>
-    */}
+            
        
        <Link to='/hoje'>
         <div className='progressbar'>

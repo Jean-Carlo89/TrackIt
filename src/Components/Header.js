@@ -33,7 +33,7 @@ const HeaderContainer = styled.header`
     
 
     div{
-       // border:1px solid red;
+       
         width:95%;
         display:flex;
         justify-content:space-between;
