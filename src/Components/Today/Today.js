@@ -12,7 +12,7 @@ import TokenContext from '../../Contexts/TokenContext'
 import {FaCheckSquare} from 'react-icons/fa';
 
 export default function Today({habitsList,setHabitsList,completedHabits,setCompletedHabits}){
-    const value= useContext(TokenContext)
+    const {token,image}= useContext(TokenContext)
     //const [habitsList,setHabitsList] = useState([])
     
     //const [completedHabits,setCompletedHabits] = useState([])
@@ -20,10 +20,10 @@ export default function Today({habitsList,setHabitsList,completedHabits,setCompl
     useEffect(()=>{
         const config = {
             headers: {
-                "Authorization": `Bearer ${value}`
+                "Authorization": `Bearer ${token}`
             }
         }
-        console.log('token :'+value)
+        console.log('token :'+token)
         axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today',config)
         
         .then((response)=>{
@@ -45,7 +45,7 @@ export default function Today({habitsList,setHabitsList,completedHabits,setCompl
          console.log(habitsList)
          console.log('Lista de habitos marcados como compelto:')
          console.log(completedHabits)
-         console.log('token :'+value)
+         console.log('token :'+token)
      }
     return(
         <Background>
@@ -96,7 +96,7 @@ export default function Today({habitsList,setHabitsList,completedHabits,setCompl
 
                 const config = {
                     headers: {
-                        "Authorization": `Bearer ${value}`
+                        "Authorization": `Bearer ${token}`
                     }
                 }
                 const promisse = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,config)

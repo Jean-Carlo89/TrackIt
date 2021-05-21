@@ -5,13 +5,13 @@ import {useContext} from 'react'
 import TokenContext from '../Contexts/TokenContext'
 
 export default function Header(){
-    
+    const{token,image} = useContext(TokenContext)
     return(
         <HeaderContainer>
             <div>
             <img  src={imgHeader}/>
 
-            <img className = 'profile' src={profile}/>
+            <img className = 'profile' src={image}/>
             </div>
 
         </HeaderContainer>

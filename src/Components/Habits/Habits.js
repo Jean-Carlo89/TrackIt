@@ -22,7 +22,7 @@ export default function Habits(){
     const [cancel,setCancel] = useState(false)
     const [loading,setLoading] = useState(false)
     
-    const value= useContext(TokenContext)
+    const {token,image}= useContext(TokenContext)
 
     const [isSelected,setIsSelected] = useState(false)
     
@@ -38,7 +38,7 @@ export default function Habits(){
         //console.log(habitsList)
         const config = {
             headers: {
-                "Authorization": `Bearer ${value}`
+                "Authorization": `Bearer ${token}`
             }
         }
        
@@ -70,7 +70,7 @@ export default function Habits(){
     function requestHabitsList(){
         const config = {
             headers: {
-                "Authorization": `Bearer ${value}`
+                "Authorization": `Bearer ${token}`
             }
         }
         
@@ -217,7 +217,7 @@ export default function Habits(){
             console.log(id)
             const config = {
                 headers: {
-                    "Authorization": `Bearer ${value}`
+                    "Authorization": `Bearer ${token}`
                 }
             }
             const promisse = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,config)
@@ -244,7 +244,7 @@ export default function Habits(){
             
             const config = {
                 headers: {
-                    "Authorization": `Bearer ${value}`
+                    "Authorization": `Bearer ${token}`
                 }
             }
             
@@ -275,7 +275,7 @@ export default function Habits(){
 
            const config = {
             headers: {
-                "Authorization": `Bearer ${value}`
+                "Authorization": `Bearer ${token}`
             }
         }
        

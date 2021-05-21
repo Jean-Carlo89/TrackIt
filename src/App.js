@@ -16,7 +16,7 @@ export default function App(){
     const [completedHabits,setCompletedHabits] = useState([])
     const[percentage,setPercentage] = useState(0)
     return (
-        <TokenContext.Provider value={token}>
+        <TokenContext.Provider value={{token,image}}>
             <PercentageContext.Provider value={{habitsList,completedHabits}}>
                 <BrowserRouter>
                     <Switch>
