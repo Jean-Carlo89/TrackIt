@@ -15,6 +15,7 @@ export default function Today(){
 
     const [habitsList,setHabitsList] = useState([])
     const value= useContext(TokenContext)
+    const [completedHabits,setCompletedHabits] = useState([])
 
     useEffect(()=>{
         const config = {
@@ -40,8 +41,10 @@ export default function Today(){
      },[])
 
      function test(){
-         console.log('Lista de habitos')
+         console.log('Lista de habitos do servidor:')
          console.log(habitsList)
+         console.log('Lista de habitos marcados como compelto:')
+         console.log(completedHabits)
      }
     return(
         <Background>
@@ -60,7 +63,12 @@ export default function Today(){
                     {habitsList.map((habit)=>{
                         
                         return(
-                        <EachHabitToday habit={habit} key={habit.id}/>
+                        <li key={habit.id} id={habit.id}>
+                            <h1>{habit.name}</h1>
+                            <h3>Sequencia atual: {habit.currentSequence}</h3>
+                            <h3>Seu recorde: {habit.highestSequence}</h3>
+                            <button className={completedHabits.includes(habit.id) ? 'selected' :''} onClick={()=>toggleCompleteHabit(habit.id)} ><FaCheckSquare/></button>
+                        </li>
                         )
 
                     })
@@ -73,7 +81,22 @@ export default function Today(){
             <Menu/>
         </Background>
         )
+
+
+        function toggleCompleteHabit(id){
+            console.log(id)
+        
+            if(completedHabits.includes(id)){
+                const newCompletedHabits = completedHabits.filter((item)=>(item!==id))
+                setCompletedHabits([...newCompletedHabits])
+            }else{
+                const newCompletedHabits2 = [...completedHabits,id]
+                setCompletedHabits(newCompletedHabits2)
+            }
+        }
 }
+
+
 
 
 const Background = styled.div`
@@ -166,15 +189,24 @@ const TodayHabits = styled.ul`
         border:1px solid red;
         background-color: white;
         padding: 0;
+        
 
         svg{
             width: 69px;
             height: 69px;
             background-color: white;
-            color: green;
+            color: gray;
          
         }
+
+       
     }
 
-    
+    .selected{
+            
+            svg{
+                color: green;
+            }
+
+        }
 `
