@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Header from '../Header'
 import Menu from '../Menu'
 import {useState,useEffect} from 'react'
-import EachDay from './eachDay'
+
 import axios from 'axios'
 import {useHistory} from 'react-router-dom'
 import {useContext} from 'react'

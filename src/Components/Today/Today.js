@@ -7,15 +7,15 @@ import Menu from '../Menu'
 import {useContext} from 'react'
 import TokenContext from '../../Contexts/TokenContext'
 
-import EachHabitToday from './EachHabitToday'
+
 
 import {FaCheckSquare} from 'react-icons/fa';
 
-export default function Today(){
-
-    const [habitsList,setHabitsList] = useState([])
+export default function Today({habitsList,setHabitsList,completedHabits,setCompletedHabits}){
     const value= useContext(TokenContext)
-    const [completedHabits,setCompletedHabits] = useState([])
+    //const [habitsList,setHabitsList] = useState([])
+    
+    //const [completedHabits,setCompletedHabits] = useState([])
 
     useEffect(()=>{
         const config = {
@@ -45,6 +45,7 @@ export default function Today(){
          console.log(habitsList)
          console.log('Lista de habitos marcados como compelto:')
          console.log(completedHabits)
+         console.log('token :'+value)
      }
     return(
         <Background>
@@ -55,7 +56,7 @@ export default function Today(){
                 <HabitInfo>
                     <div>
                     <h1>Hoje, 20/05</h1>
-                    <h2>Nenhum hábito concluído ainda</h2>
+                    <h2 className={completedHabits.length<1 ? '' : 'selected'}>{completedHabits.length<1 ? 'Nenhum hábito concluído ainda' : `${(completedHabits.length/habitsList.length)*100}% dos hábitos concluídos`}</h2>
                     </div>
                 </HabitInfo>
 
@@ -67,7 +68,7 @@ export default function Today(){
                             <h1>{habit.name}</h1>
                             <h3>Sequencia atual: {habit.currentSequence}</h3>
                             <h3>Seu recorde: {habit.highestSequence}</h3>
-                            <button className={completedHabits.includes(habit.id) ? 'selected' :''} onClick={()=>toggleCompleteHabit(habit.id)} ><FaCheckSquare/></button>
+                            <button className={completedHabits.includes(habit.id) || habit.done===true ? 'selected' :''} onClick={()=>toggleCompleteHabit(habit.id)} ><FaCheckSquare/></button>
                         </li>
                         )
 
@@ -85,14 +86,36 @@ export default function Today(){
 
         function toggleCompleteHabit(id){
             console.log(id)
-        
+            console.log(completedHabits)
             if(completedHabits.includes(id)){
                 const newCompletedHabits = completedHabits.filter((item)=>(item!==id))
                 setCompletedHabits([...newCompletedHabits])
             }else{
                 const newCompletedHabits2 = [...completedHabits,id]
                 setCompletedHabits(newCompletedHabits2)
+
+                const config = {
+                    headers: {
+                        "Authorization": `Bearer ${value}`
+                    }
+                }
+                const promisse = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,config)
+                
+                promisse.then((response)=>{
+                    console.log('habito marcado como completo pelo servidor')
+                    console.log(response)
+                })
+
+                 
+                promisse.catch((responseError)=>{
+                    console.log('Erro na marcao do habito pelo servidor')
+                    console.log(responseError)
+                })
             }
+            console.log(completedHabits)
+
+            
+
         }
 }
 
@@ -145,6 +168,10 @@ const HabitInfo = styled.div`
             font-size: 18px;
             color: #BABABA;
 
+        }
+
+        h2.selected{
+            color: green;
         }
 
 `
