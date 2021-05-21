@@ -7,12 +7,16 @@ import Menu from '../Menu'
 import {useContext} from 'react'
 import TokenContext from '../../Contexts/TokenContext'
 
+import dayjs from 'dayjs'
+
 
 
 import {FaCheckSquare} from 'react-icons/fa';
 
 export default function Today({habitsList,setHabitsList,completedHabits,setCompletedHabits}){
     const {token,image}= useContext(TokenContext)
+    require('dayjs/locale/pt-br')
+    dayjs.locale('pt-br')
     //const [habitsList,setHabitsList] = useState([])
     
     //const [completedHabits,setCompletedHabits] = useState([])
@@ -23,19 +27,35 @@ export default function Today({habitsList,setHabitsList,completedHabits,setCompl
                 "Authorization": `Bearer ${token}`
             }
         }
-        console.log('token :'+token)
+       // console.log('token :'+token)
         axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today',config)
         
         .then((response)=>{
             console.log('requisicao da pagina hoje passou')
-            console.log(response)
+            //console.log(response)
             setHabitsList(response.data)
+
+            
+            const newArray = response.data.filter((habit)=>{
+                if(habit.done===true){
+                    return true
+                }
+        })
+
+        setCompletedHabits(newArray)
+           
+
+           
+            
+          
+
+           
         })
 
              
         .catch((responseError)=>{
             console.log('requisicao da pagina hoje deu erro')
-            console.log(responseError)
+           // console.log(responseError)
         })
 
      },[])
@@ -55,7 +75,7 @@ export default function Today({habitsList,setHabitsList,completedHabits,setCompl
                 <button onClick={test}>testar dados</button>
                 <HabitInfo>
                     <div>
-                    <h1>Hoje, 20/05</h1>
+                    <h1>{`${dayjs().format('dddd')},${dayjs().format('D/MM')}`}</h1>
                     <h2 className={completedHabits.length<1 ? '' : 'selected'}>{completedHabits.length<1 ? 'Nenhum hábito concluído ainda' : `${(completedHabits.length/habitsList.length)*100}% dos hábitos concluídos`}</h2>
                     </div>
                 </HabitInfo>
@@ -66,9 +86,9 @@ export default function Today({habitsList,setHabitsList,completedHabits,setCompl
                         return(
                         <li key={habit.id} id={habit.id}>
                             <h1>{habit.name}</h1>
-                            <h3>Sequencia atual: {habit.currentSequence}</h3>
+                            <h3>Sequencia atual: <em className={ habit.done===true ? 'selected' :''}>{habit.currentSequence}</em></h3>
                             <h3>Seu recorde: {habit.highestSequence}</h3>
-                            <button className={completedHabits.includes(habit.id) || habit.done===true ? 'selected' :''} onClick={()=>toggleCompleteHabit(habit.id)} ><FaCheckSquare/></button>
+                            <button className={ habit.done===true ? 'selected' :''} onClick={()=>toggleCompleteHabit(habit.id,habit.done)} ><FaCheckSquare/></button>
                         </li>
                         )
 
@@ -84,38 +104,100 @@ export default function Today({habitsList,setHabitsList,completedHabits,setCompl
         )
 
 
-        function toggleCompleteHabit(id){
+        function toggleCompleteHabit(id,done){
             console.log(id)
             console.log(completedHabits)
-            if(completedHabits.includes(id)){
+            console.log(token)
+            
+           /* if(completedHabits.includes(id)){
                 const newCompletedHabits = completedHabits.filter((item)=>(item!==id))
                 setCompletedHabits([...newCompletedHabits])
+                
+               
+            
             }else{
                 const newCompletedHabits2 = [...completedHabits,id]
                 setCompletedHabits(newCompletedHabits2)
 
-               /* const config = {
+               
+            }*/
+           
+
+            if(!done){
+
+                const config = {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
                 }
-                const promisse = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,config)
+                const promisse = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,{},config)
                 
                 promisse.then((response)=>{
                     console.log('habito marcado como completo pelo servidor')
                     console.log(response)
+                    update(id)
                 })
 
                  
                 promisse.catch((responseError)=>{
                     console.log('Erro na marcao do habito pelo servidor')
                     console.log(responseError)
-                })*/
+                })
+
+            }else{
+                const config = {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                }
+                const promisse = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,{},config)
+                
+                promisse.then((response)=>{
+                    console.log('habito desmarcado como completo pelo servidor')
+                    console.log(response)
+                    update(id)
+                })
+
+                 
+                promisse.catch((responseError)=>{
+                    console.log('Erro ao desmarcar o habito pelo servidor')
+                    console.log(responseError)
+                })
+            }   
+
+        }
+
+        function update(id){
+
+            const config = {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             }
-            console.log(completedHabits)
-
+           // console.log('token :'+token)
+            axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today',config)
             
+            .then((response)=>{
+                console.log('requisicao da pagina hoje passou')
+                console.log(response)
+                setHabitsList(response.data)
+                
+                
+                const newArray = response.data.filter((habit)=>{
+                        if(habit.done===true){
+                            return true
+                        }
+                })
 
+                setCompletedHabits(newArray)
+            })
+    
+                 
+            .catch((responseError)=>{
+                console.log('requisicao da pagina hoje deu erro')
+                console.log(responseError)
+            })
+    
         }
 }
 
@@ -136,6 +218,7 @@ const Background = styled.div`
 const Container = styled.div` 
         width:95%;
         display:flex;
+        min-height: 500px;
         height: auto;
         border: 1px solid red;
         flex-direction:column;
@@ -168,11 +251,15 @@ const HabitInfo = styled.div`
             font-size: 18px;
             color: #BABABA;
 
+            
         }
 
-        h2.selected{
-            color: green;
-        }
+        
+           
+
+        
+
+       
 
 `
 
@@ -207,8 +294,14 @@ const TodayHabits = styled.ul`
         width: 148px;
         height: 32px;
         margin-bottom: -16px;
-    }
 
+        
+
+        em.selected{
+        color: #8FC549;
+        }
+    
+    }
     button{
         position: absolute;
         top: 12px;
@@ -232,7 +325,7 @@ const TodayHabits = styled.ul`
     .selected{
             
             svg{
-                color: green;
+                color: #8FC549;
             }
 
         }
