@@ -37,7 +37,7 @@ const Container = styled.div`
         width:95%;
         display:flex;
         height: auto;
-       // border: 1px solid red;
+       
         flex-direction:column;
         margin-top:70px;
         align-items:center;
@@ -47,15 +47,14 @@ const Container = styled.div`
 const HistoryInfo = styled.div`
     width: 100%;
     height: 100px;
-    //background-color: gray;
+    
     display: flex;
     flex-direction: column;
    justify-content: center;
 
         div{
             height: 80px;
-           // border: 1px solid blue;
-            //margin-top: 10px;
+           
             margin-left: 20px;
             display: flex;
             flex-direction: column;

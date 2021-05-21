@@ -10,13 +10,12 @@ import Loader from "react-loader-spinner";
 export default function Main({token,setToken,image,setImage}){
     const  [loginData,setLoginData] = useState({})
     const [loading,setLoading] = useState(false)
-    
-   const history = useHistory()
+    const history = useHistory()
     
    function login(){
-        //console.log(loginData)
+        
         const body = {...loginData}
-        //console.log(login)
+        
         setLoading(true)
         const promisse= axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login',body)
         
@@ -36,10 +35,10 @@ export default function Main({token,setToken,image,setImage}){
         promisse.catch((responseError)=>{
             setLoading(false)
             console.log('deu ruim')
-           // console.log(responseError)
+           
             const empty={}
             setLoginData(empty)
-            //console.log(responseError.response)
+            
             
             
             if(responseError.response.status===401){
@@ -49,7 +48,7 @@ export default function Main({token,setToken,image,setImage}){
                 alert('dados incorretos')
             }
          
-            //alert('dados incorretos')
+            
             })
     }
 
@@ -57,21 +56,18 @@ export default function Main({token,setToken,image,setImage}){
     
         loginData[key]=e.target.value
         setLoginData({...loginData})
-        //console.log(loginData)
+        
        
     }
 
-    function teste(){
-        console.log(loginData)
-        console.log(token)
-    }
+    
     return (
     
     
         <Container>
     
             <img src={trackit}/>
-           <button onClick={teste}>sas</button>
+           
            <input className='first' 
            type='text' 
            value={loginData.email || ''} 
@@ -104,7 +100,7 @@ export default function Main({token,setToken,image,setImage}){
         min-width:305px;
         min-height:178px;
         height:100vh;
-       // background-color:lightblue;
+       
         display:flex;
         flex-direction:column;
         margin: 0 auto;
@@ -116,7 +112,7 @@ export default function Main({token,setToken,image,setImage}){
     
         input{
             width:303px;
-            
+            min-height: 45px;
             height: 45px;
             border: 1px solid #D5D5D5;
             border-radius:5px;

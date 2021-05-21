@@ -13,6 +13,8 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 import {FaRegTrashAlt} from 'react-icons/fa'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
 
 export default function Habits(){
     const [addHabit,setAddHabit] = useState(false)
@@ -34,8 +36,7 @@ export default function Habits(){
     const days = ['D','S','T','Q','Q','S','S']
     
     useEffect(()=>{
-       // console.log('lista de habitos assim que entra na pagina')
-        //console.log(habitsList)
+      
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -45,26 +46,16 @@ export default function Habits(){
         const requisition = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',config)
         
         requisition.then((response)=>{
-            console.log('a requisicao deu certo')
-            console.log(response)
+          
             setHabitsList(response.data)
             
         })
 
         requisition.catch((responseError)=>{
-            console.log('a requisicao falhou')
-            console.log(responseError.response)
+           
         })
 
-     /* if(habitsList.length===0 ){
-        
-        setShowHabit(true)
-        console.log('passow por showhabit true')
-      }else{
-        setShowHabit(false)
-        console.log('passow por showhabit false')
-      }
-       // habitsList.length===0 ? setShowHabit(true) : setShowHabit(false)*/
+     
     },[])
 
     function requestHabitsList(){
@@ -77,15 +68,13 @@ export default function Habits(){
         const requisition = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',config)
         
         requisition.then((response)=>{
-            console.log('a requisicao deu certo')
-            console.log(response)
+           
             setHabitsList(response.data)
             
         })
 
         requisition.catch((responseError)=>{
-            console.log('a requisicao falhou')
-            console.log(responseError.response)
+            
         })
     }
 
@@ -93,7 +82,6 @@ export default function Habits(){
     
     function selectDays(dayNumber){
         
-         console.log(dayNumber)
          
        
 
@@ -135,14 +123,14 @@ export default function Habits(){
 
                         <div className='cancel-submit'>
 
-                            <p onClick={cancelHabit}>Cancelar</p>  <button className='send' disabled={loading} onClick={saveNewHabit}>Salvar</button>
+                            <p onClick={cancelHabit}>Cancelar</p>  <button className='send' disabled={loading} onClick={saveNewHabit}>{loading ? <Loader type="ThreeDots" color="#FFFFFF" height={40} width={80} /> :'Salvar'}</button>
                         </div>
                     
                     
                 </div>
             
          
-                <button onClick={check}></button>
+               
 
                 <ul>
                 {habitsList.map((item)=>{
@@ -182,29 +170,12 @@ export default function Habits(){
 
 
         function createHabit(){
-            //add ? setAdd(false) : setAdd(true)
+            
             setAddHabit(true)
-            //setChosenDays([])
+            
         }
         
-        
-        function check(){
-        
-            //console.log(days)
-            console.log('dias escolhidos')
-            console.log(chosendays)
-            /*console.log('habito :' +habit)
-            console.log('valor do token :'+value)
-            console.log('lista de habitos')
-            console.log(habitsList)
-            console.log('estado do showhabit')
-            console.log(showHabit)
-            console.log('estado do addHabit')
-            console.log(addHabit)
-            console.log('estado do loading')
-            console.log(loading)*/
-
-        }
+       
 
         function deleteHabit(e,id){
             
@@ -214,7 +185,7 @@ export default function Habits(){
                 return
             }
            
-            console.log(id)
+
             const config = {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -223,13 +194,11 @@ export default function Habits(){
             const promisse = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,config)
             
             promisse.then((response)=>{
-                console.log('deletou')
-                console.log(response)
+                
             })
 
             promisse.catch((responseError)=>{
-                console.log('erro no delete')
-                console.log(responseError)
+               
             })
 
             requestHabitsList()
@@ -253,25 +222,21 @@ export default function Habits(){
                 days:chosendays
             }
 
-           /* setChosenDays([])
-            setHabit('')
-            setCancel(true)
-            setAddHabit(false)*/
+          
             setLoading(true)
             const promisse= axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',habitObject,config)
         
             promisse.then((response)=>{
               
                 
-                console.log('novo habito criado')
-                console.log(response)
+                
                 setLoading(false)
 
             setChosenDays([])
             setHabit('')
             setCancel(true)
             setAddHabit(false)
-           // history.push('/habitos')
+           
 
            const config = {
             headers: {
@@ -282,26 +247,23 @@ export default function Habits(){
         const requisition = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',config)
         
         requisition.then((response)=>{
-            console.log('a requisicao deu certo')
-            console.log(response)
+           
             setHabitsList(response.data)
             
         })
 
         requisition.catch((responseError)=>{
-            console.log('a requisicao falhou')
-            console.log(responseError.response)
+           
         })
 
-       // checkHabitsList()
+       
         habitsList.length===0 ? setShowHabit(true) : setShowHabit(false)
 
         
             })
         
             promisse.catch((responseError)=>{
-                console.log('Erro na criacao de habito')
-                console.log(responseError)
+                
                 setLoading(false)
         
             })
@@ -352,7 +314,7 @@ const Container = styled.div`
         width:95%;
         display:flex;
         height: auto;
-       // border: 1px solid red;
+       
         flex-direction:column;
         margin-top:70px;
         align-items:center;
@@ -364,7 +326,7 @@ const Container = styled.div`
 
                 width:340px;
                 height:180px;
-                //border:1px solid  black;
+                
                 display :${props=>props.addHabit ? 'flex' : 'none'};
                 flex-direction:column;
                 background-color:white;
@@ -375,7 +337,7 @@ const Container = styled.div`
                 input{
                         width:303px;
                         height: 45px;
-                        //border:1px solid #D5D5D5;
+                        
                         margin-top:10px;
                         padding-top:5px;
 
@@ -398,7 +360,7 @@ const Container = styled.div`
                     justify-content:center;
                     align-items:center;
                     border:1px solid #CFCFCF;
-                   // background-color: white;
+                   
                     color: gray;
                     
                 }
@@ -434,7 +396,7 @@ const Container = styled.div`
                         height:35px;
                         background-color: #52B6FF;
                         color:white;
-                        //border-radius:4px;
+                        
                         
 
 
@@ -445,11 +407,11 @@ const Container = styled.div`
             }
         
         .message{
-            //border:1px solid green;
+            
             width:338px;
             height:74px;
             font-size:18px;
-            //display: ${props=>props.showHabit ? 'block' : 'none'};
+           
             margin-top:30px;
         }
         
@@ -457,9 +419,7 @@ const Container = styled.div`
 
         width:100%;
         display:flex;
-        //height: 75px;
-        //border: 1px solid red;
-        //border:1px solid yellow;
+       
         justify-content:space-between;
         align-items:center;
         font-size: 23px;
@@ -477,7 +437,7 @@ const Container = styled.div`
        .habit1{
         width:340px;
             height:90px;
-            //border:1px solid  black;
+            
             
             flex-direction:column;
             background-color:white;
@@ -488,7 +448,7 @@ const Container = styled.div`
             h2{
                 width:303px;
                         height: 45px;
-                        //border:1px solid #D5D5D5;
+                        
                         margin-top:10px;
                         padding-top:5px;
                         font-size: 20px;
@@ -512,7 +472,7 @@ const Container = styled.div`
                     align-items:center;
                     border:1px solid #CFCFCF;
                     margin-right: 5px;
-                    //margin-bottom: 20px;
+                    
                     
                 }
 
@@ -523,13 +483,13 @@ const Container = styled.div`
 
                 .trash{
                     display: inline;
-                    //border: 1px solid blue;
+                    
                    
                    position: absolute;
                    top: 10px;
                     right: 10px;
                     color :red;
-                   //margin-left: 300px;
+                   
                     
                 }
        }
@@ -553,35 +513,3 @@ const DaysDiv = styled.div`
             color: white;
         }
 `
-
-/*
-const Habit = styled.div`
-            width:340px;
-            height:90px;
-            //border:1px solid  black;
-            display :${props=>props.showHabit ? 'flex' : 'none'};
-            flex-direction:column;
-            background-color:white;
-            border-radius:5px;
-
-`
-*/
-/*const CreateHabit = styled.div`
-     
-           width:340px;
-            height:180px;
-            //border:1px solid  black;
-            display :${props=>props.showHabit ? 'block' : 'none'};
-
-
-            input{
-                    width:303px;
-                    height: 45px;
-                    border:1px solid #D5D5D5;
-            }
-    
-`
-
-*/
-{/*isSelected={isSelected}
-                                setIsSelected={setIsSelected}*/}
